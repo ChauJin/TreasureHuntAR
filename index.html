@@ -87,8 +87,7 @@
         event-set__click="_event: click; visible: false; sound: src: #clickSound; on: click;"></a-plane>
       <a-gltf-model id="gltfModel" rotation="0 0 0" position="0 0 0.1" scale="0.005 0.005 0.005" src="#avatarModel"
         animation="property: position; to: 0 0.1 0.1; dur: 1000; easing: easeInOutQuad; loop: true; dir: alternate"
-        class="clickable"
-        event-set__click="_event: click; visible: false; sound: src: #clickSound; on: click;"></a-gltf-model>
+        class="clickable"></a-gltf-model>
     </a-entity>
 
     <div id="questionContainer" style="display: none;">
@@ -112,8 +111,8 @@
       const questionContainer = document.querySelector("#questionContainer");
       const questionForm = document.querySelector("#questionForm");
       const qrCodeContainer = document.querySelector("#qrCodeContainer");
-      const gltfModel = document.querySelector('#avatarModel');
-
+      const gltfModel = document.querySelector('#gltfModel'); // Use correct ID
+    
       gltfModel.addEventListener("click", function () {
         // Hide the glTF model
         gltfModel.setAttribute("visible", false);
@@ -121,7 +120,7 @@
         clickSound.play();
         questionContainer.style.display = "block";
       });
-
+    
       interactiveEntity.addEventListener("click", function () {
         // Hide the plane image
         interactiveEntity.setAttribute("visible", false);
@@ -129,7 +128,7 @@
         clickSound.play();
         questionContainer.style.display = "block";
       });
-
+    
       questionForm.addEventListener("submit", function (event) {
         event.preventDefault();
         const selectedAnswer = document.querySelector('input[name="answer"]:checked').value;
@@ -141,6 +140,7 @@
         }
       });
     </script>
+    
   </a-scene>
 </body>
 
