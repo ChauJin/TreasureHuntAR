@@ -1,5 +1,4 @@
 <html>
-
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <script src="https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.1.4/dist/mindar-image.prod.js"></script>
@@ -7,63 +6,18 @@
   <script src="https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.1.4/dist/mindar-image-aframe.prod.js"></script>
   <!-- 方便在移动端调试 -->
   <script src="https://unpkg.com/vconsole@latest/dist/vconsole.min.js"></script>
-
 </head>
 
-
 <body>
-  
-    <a-scene mindar-image="imageTargetSrc: ./targets.mind; maxTrack: 2">
-
-      <a-assets>
-        <img id="card" src="https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.2.2/examples/image-tracking/assets/card-example/card.png" />
-        <a-asset-item id="model" src="./assets/avocado.glb"></a-asset-item>
-      </a-assets>
-      <!-- <a-assets>
-      <img id="boxTexture" src="https://i.imgur.com/mYmmbrp.jpg">
-    </a-assets> -->
-      <!-- <a-box
-    src="#boxTexture"
-    position="0 2 -5"
-    rotation="0 45 45"
-    scale="2 2 2"
-    animation__position="property: object3D.position.y; to: 2.2; dir: alternate; dur: 2000; loop: true"
-    animation__mouseenter="property: scale; to: 2.3 2.3 2.3; dur: 300; startEvents: mouseenter"
-    animation__mouseleave="property: scale; to: 2 2 2; dur: 300; startEvents: mouseleave"></a-box>
-
-    <a-camera position="0 0 0" look-controls="enabled: false"><a-cursor></a-cursor></a-camera> -->
-
-      <a-entity mindar-image-target="targetIndex: 0">
-        <a-plane src="#card" position="0 0 0" height="0.552" width="1" rotation="0 0 0"></a-plane>
-        <a-gltf-model rotation="0 0 0 " position="0 0 0.1" scale="0.005 0.005 0.005" src="#model" animation="property: position; to: 0 0.1 0.1; dur: 1000; easing: easeInOutQuad; loop: true; dir: alternate">
-      </a-entity>
- 
-
-    </a-scene>
-
-    <!-- <script>
-      var boxEl = document.querySelector('a-box');
-      boxEl.addEventListener('mouseenter', function () {
-        boxEl.setAttribute('scale', { x: 2, y: 2, z: 2 });
-      });
-    </script>
-
-
-    <script>
-      AFRAME.registerComponent('scale-on-mouseenter', {
-        schema: {
-          to: { default: '2.5 2.5 2.5', type: 'vec3' }
-        },
-
-        init: function () {
-          var data = this.data;
-          var el = this.el;
-          this.el.addEventListener('mouseenter', function () {
-            el.object3D.scale.copy(data.to);
-          });
-        }
-      });
-    </script> -->
+  <a-scene mindar-image="imageTargetSrc: ./targets.mind; maxTrack: 2">
+    <a-assets>
+      <img id="card" src="https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.2.2/examples/image-tracking/assets/card-example/card.png" />
+      <a-asset-item id="model" src="./assets/avocado.glb"></a-asset-item>
+    </a-assets>
+    <a-entity mindar-image-target="targetIndex: 0">
+      <a-plane src="#card" position="0 0 0" height="0.552" width="1" rotation="0 0 0"></a-plane>
+      <a-gltf-model rotation="0 0 0" position="0 0 0.1" scale="0.005 0.005 0.005" src="#model" animation="property: position; to: 0 0.1 0.1; dur: 1000; easing: easeInOutQuad; loop: true; dir: alternate"></a-gltf-model>
+    </a-entity>
+  </a-scene>
 </body>
-
 </html>
