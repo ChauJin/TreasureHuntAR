@@ -1,4 +1,3 @@
-
 <html>
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -13,64 +12,7 @@
 </a-assets>
 
 <body>
-  <div id="question-container1" style="display: none;">
-    <h1>Question 1</h1>
-    <p>What’s full of holes but still holds water?</p>
-    <input type="radio" name="question1" value="a" /> a. a sponge<br />
-    <input type="radio" name="question1" value="b" /> b. a sieve<br />
-    <input type="radio" name="question1" value="c" /> c. a colander<br />
-    <input type="radio" name="question1" value="d" /> d. a strainer<br />
-    <button onclick="checkAnswer(1)">Submit</button>
-  </div>
-
-  <div id="question-container2" style="display: none;">
-    <h1>Question 2</h1>
-    <p>What building has the most stories?</p>
-    <input type="radio" name="question2" value="a" /> a. A Library<br />
-    <input type="radio" name="question2" value="b" /> b. A skyscraper<br />
-    <input type="radio" name="question2" value="c" /> c. A museum<br />
-    <input type="radio" name="question2" value="d" /> d. A theater<br />
-    <button onclick="checkAnswer(2)">Submit</button>
-  </div>
-
-  <div id="question-container3" style="display: none;">
-    <h1>Question 3</h1>
-    <p>Which is faster, hot or cold?</p>
-    <input type="radio" name="question3" value="a" /> a. Hot's faster. You can catch a cold.<br />
-    <input type="radio" name="question3" value="b" /> b. Cold is faster. It freezes everything.<br />
-    <input type="radio" name="question3" value="c" /> c. Hot and cold have the same speed.<br />
-    <input type="radio" name="question3" value="d" /> d. It depends on the context.<br />
-    <button onclick="checkAnswer(3)">Submit</button>
-  </div>
-
-  <div id="question-container4" style="display: none;">
-    <h1>Question 4</h1>
-    <p>When is your mind like a rumpled bed?</p>
-    <input type="radio" name="question4" value="a" /> a. When it is not made up.<br />
-    <input type="radio" name="question4" value="b" /> b. When you wake up in the morning.<br />
-    <input type="radio" name="question4" value="c" /> c. When you have a lot on your mind.<br />
-    <input type="radio" name="question4" value="d" /> d. When you're exhausted.<br />
-    <button onclick="checkAnswer(4)">Submit</button>
-  </div>
-
-  <div id="question-container5" style="display: none;">
-    <h1>Question 5</h1>
-    <p>What is it that everybody does at the same time?</p>
-    <input type="radio" name="question5" value="a" /> a. Grow older<br />
-    <input type="radio" name="question5" value="b" /> b. Sleep<br />
-    <input type="radio" name="question5" value="c" /> c. Breathe<br />
-    <input type="radio" name="question5" value="d" /> d. Blink<br />
-    <button onclick="checkAnswer(5)">Submit</button>
-  </div>
-
-  <div id="redeem-container" style="display: none;">
-    <h1>Congratulations!</h1>
-    <p>You have answered all the questions correctly.</p>
-    <p>Here is your redeem coupon:</p>
-    <img src="./redeemCode/redeem.png" alt="Redeem Coupon QR Code" />
-  </div>
-
-  <a-scene mindar-image="imageTargetSrc: ./targets.mind; maxTrack: 2">
+  <a-scene mindar-image="imageTargetSrc: ./targets.mind; maxTsrack: 2">
     <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
 
     <a-entity mindar-image-target="targetIndex: 0">
@@ -80,22 +22,53 @@
     <a-entity mindar-image-target="targetIndex: 1">
       <a-entity gltf-model="#model" rotation="0 180 0" scale="3 3 3" position="0 -0.5 0" animation-mixer="clip: Run"></a-entity>
     </a-entity>
+
+    <div id="question-container" style="display: none;">
+      <h1>Question 1</h1>
+      <p>What’s full of holes but still holds water?</p>
+      <input type="radio" name="question1" value="a" /> a. a sponge<br />
+      <input type="radio" name="question1" value="b" /> b. a sieve<br />
+      <input type="radio" name="question1" value="c" /> c. a colander<br />
+      <input type="radio" name="question1" value="d" /> d. a strainer<br />
+      <button onclick="checkAnswer(1)">Submit</button>
+    </div>
+
+    <div id="redeem-container" style="display: none;">
+      <h1>Congratulations!</h1>
+      <p>You have answered all the questions correctly.</p>
+      <p>Here is your redeem coupon:</p>
+      <img src="./redeemCode/redeem.png" alt="Redeem Coupon QR Code" />
+    </div>
   </a-scene>
 
   <script>
-    function checkAnswer() {
+    var currentQuestion = 1;
+
+    function checkAnswer(questionNumber) {
       // Get the user's answer from the input field
-      var answer = document.getElementById("answer-input").value;
+      var answer = document.querySelector('input[name="question' + questionNumber + '"]:checked');
 
-      // Check if the answer is correct
-      if (answer.toLowerCase() === "artichoke") {
-        // Hide the question container
-        document.getElementById("question-container").style.display = "none";
+      // Check if an answer is selected
+      if (answer) {
+        // Check if the answer is correct
+        if (answer.value === "b") {  // Assuming option 'b' is the correct answer for all questions
+          // Hide the current question container
+          document.getElementById("question-container").style.display = "none";
 
-        // Show the redeem container
-        document.getElementById("redeem-container").style.display = "block";
+          // Check if it was the last question
+          if (questionNumber === 5) {
+            // Show the redeem container
+            document.getElementById("redeem-container").style.display = "block";
+          } else {
+            // Show the next question container
+            currentQuestion++;
+            document.getElementById("question-container").style.display = "block";
+          }
+        } else {
+          alert("Sorry, that is incorrect. Please try again.");
+        }
       } else {
-        alert("Sorry, that is incorrect. Please try again.");
+        alert("Please select an answer.");
       }
     }
   </script>
