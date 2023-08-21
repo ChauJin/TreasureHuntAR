@@ -76,7 +76,7 @@
        <a-entity mindar-image-target="targetIndex: 0">
   <a-plane id="interactiveEntity" src="#card" position="0 0 0" height="0.552" width="1" rotation="0 0 0"
     class="clickable" event-set__click="_event: click; visible: false; sound: src: #clickSound; on: click;"></a-plane>
-  <a-gltf-model rotation="0 0 0" position="0 0 0.1" scale="0.005 0.005 0.005" src="#avatarModel"
+  <a-gltf-model id="gltfModel" rotation="0 0 0" position="0 0 0.1" scale="0.005 0.005 0.005" src="#avatarModel"
     animation="property: position; to: 0 0.1 0.1; dur: 1000; easing: easeInOutQuad; loop: true; dir: alternate"
     class="clickable" event-set__click="_event: click; visible: false; sound: src: #clickSound; on: click;"></a-gltf-model>
 </a-entity>
@@ -102,6 +102,12 @@ const interactiveEntity = document.querySelector("#interactiveEntity");
 const questionContainer = document.querySelector("#questionContainer");
 const questionForm = document.querySelector("#questionForm");
 const qrCodeContainer = document.querySelector("#qrCodeContainer");
+const gltfModel = document.querySelector('#avatarModel');
+
+    gltfModel.addEventListener("click", function() {
+      // Hide the glTF model
+      gltfModel.setAttribute("visible", false);
+    });
 
 interactiveEntity.addEventListener("click", function() {
   interactiveEntity.setAttribute("visible", false);
