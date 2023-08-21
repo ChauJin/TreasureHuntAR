@@ -1,3 +1,4 @@
+
 <html>
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -5,110 +6,54 @@
     <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.2/dist/mindar-image-aframe.prod.js"></script>
     <script>
       document.addEventListener("DOMContentLoaded", function() {
-        const sceneEl = document.querySelector('a-scene');
-        let arSystem;
-        sceneEl.addEventListener('loaded', function () {
-          arSystem = sceneEl.systems["mindar-image-system"];
-        });
-        const exampleTarget = document.querySelector('#example-target');
-        const examplePlane = document.querySelector('#example-plane');
-        const startButton = document.querySelector("#example-start-button");
-        const stopButton = document.querySelector("#example-stop-button");
-        const pauseButton = document.querySelector("#example-pause-button");
-        const pauseKeepVideoButton = document.querySelector("#example-pause-keep-video-button");
-        const unpauseButton = document.querySelector("#example-unpause-button");
-        const questionContainer = document.querySelector("#question-container");
-        const qrCodeContainer = document.querySelector("#qr-code-container");
-        const answerRadioButtons = document.querySelectorAll('input[name="answer"]');
-        
-        startButton.addEventListener('click', () => {
-          console.log("start");
-          arSystem.start(); // Start AR 
-        });
-        
-        stopButton.addEventListener('click', () => {
-          arSystem.stop(); // Stop AR 
-        });
-        
-        pauseButton.addEventListener('click', () => {
-          arSystem.pause(); // Pause AR and pause video
-        });
-        
-        pauseKeepVideoButton.addEventListener('click', () => {
-          arSystem.pause(true); // Pause AR and keep video
-        });
-        
-        unpauseButton.addEventListener('click', () => {
-          arSystem.unpause(); // Unpause AR and video
-        });
-        
-        // arReady event triggered when ready
-        sceneEl.addEventListener("arReady", (event) => {
-          // console.log("MindAR is ready")
-        });
-        
-        // arError event triggered when something went wrong. Mostly browser compatibility issue
-        sceneEl.addEventListener("arError", (event) => {
-          // console.log("MindAR failed to start")
-        });
-        
-        // Detect target found
-        exampleTarget.addEventListener("targetFound", event => {
-          console.log("target found");
-        });
-        
-        // Detect target lost
-        exampleTarget.addEventListener("targetLost", event => {
-          console.log("target lost");
-        });
-        
-        // Detect click event on the entity
-        examplePlane.addEventListener("click", event => {
-          examplePlane.setAttribute("visible", "false"); // Hide the entity
-          playSoundEffect(); // Play sound effect
-          showQuestion(); // Show the question
-        });
-        
-        function playSoundEffect() {
-          // Add code to play sound effect here
-        }
-        
-        function showQuestion() {
-          questionContainer.style.display = "block";
-        }
-        
-        function hideQuestion() {
-          questionContainer.style.display = "none";
-        }
-        
-        function showQRCode() {
-          qrCodeContainer.style.display = "block";
-        }
-        
-        function hideQRCode() {
-          qrCodeContainer.style.display = "none";
-        }
-        
-        function checkAnswer() {
-          // Get the selected answer
-          let selectedAnswer;
-          for (const radioButton of answerRadioButtons) {
-            if (radioButton.checked) {
-              selectedAnswer = radioButton.value;
-              break;
-            }
-          }
-          
-          // Check if the selected answer is correct
-          if (selectedAnswer === "correct") {
-            hideQuestion();
-            showQRCode();
-          }
-        }
-        
-        // Attach event listener to the submit button of the question form
-        const submitButton = document.querySelector("#submit-button");
-        submitButton.addEventListener("click", checkAnswer);
+	const sceneEl = document.querySelector('a-scene');
+	let arSystem;
+	sceneEl.addEventListener('loaded', function () {
+	  arSystem = sceneEl.systems["mindar-image-system"];
+	});
+	const exampleTarget = document.querySelector('#example-target');
+	const examplePlane = document.querySelector('#example-plane');
+	const startButton = document.querySelector("#example-start-button");
+	const stopButton = document.querySelector("#example-stop-button");
+	const pauseButton = document.querySelector("#example-pause-button");
+	const pauseKeepVideoButton = document.querySelector("#example-pause-keep-video-button");
+	const unpauseButton = document.querySelector("#example-unpause-button");
+	startButton.addEventListener('click', () => {
+	  console.log("start");
+	  arSystem.start(); // start AR 
+	});
+	stopButton.addEventListener('click', () => {
+	  arSystem.stop(); // stop AR 
+	});
+	pauseButton.addEventListener('click', () => {
+	  arSystem.pause(); // pause AR, pause video
+	});
+	pauseKeepVideoButton.addEventListener('click', () => {
+	  arSystem.pause(true); // pause AR, keep video
+	});
+	unpauseButton.addEventListener('click', () => {
+	  arSystem.unpause(); // unpause AR and video
+	});
+	// arReady event triggered when ready
+	sceneEl.addEventListener("arReady", (event) => {
+	  // console.log("MindAR is ready")
+	});
+	// arError event triggered when something went wrong. Mostly browser compatbility issue
+	sceneEl.addEventListener("arError", (event) => {
+	  // console.log("MindAR failed to start")
+	});
+	// detect target found
+	exampleTarget.addEventListener("targetFound", event => {
+	  console.log("target found");
+	});
+	// detect target lost
+	exampleTarget.addEventListener("targetLost", event => {
+	  console.log("target lost");
+	});
+	// detect click event
+	examplePlane.addEventListener("click", event => {
+	  console.log("plane click");
+	});
       });
     </script>
   </head>
@@ -120,36 +65,63 @@
       <button id="example-unpause-button">UnPause</button>
       <button id="example-stop-button">Stop</button>
     </div>
-    
     <a-scene mindar-image="imageTargetSrc: https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.2.2/examples/image-tracking/assets/card-example/card.mind;" color-space="sRGB" renderer="colorManagement: true, physicallyCorrectLights" vr-mode-ui="enabled: false" device-orientation-permission-ui="enabled: false">
       <a-assets>
         <img id="card" src="https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.2.2/examples/image-tracking/assets/card-example/card.png" />
         <a-asset-item id="avatarModel" src="https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.2.2/examples/image-tracking/assets/card-example/softmind/scene.gltf"></a-asset-item>
       </a-assets>
 
+      
       <a-camera position="0 0 0" look-controls="enabled: false" cursor="fuse: false; rayOrigin: mouse;" raycaster="near: 10; far: 10000; objects: .clickable"></a-camera>
 
       <a-entity mindar-image-target="targetIndex: 0">
-        <a-plane id="example-plane" src="#card" position="0 0 0" height="0.552" width="1" rotation="0 0 0" class="clickable"></a-plane>
-        <a-gltf-model rotation="0 0 0 " position="0 0 0.1" scale="0.005 0.005 0.005" src="#avatarModel" animation="property: position; to: 0 0.1 0.1; dur: 1000; easing: easeInOutQuad; loop: true; dir: alternate">
+        <a-plane id="interactiveEntity" src="#card" position="0 0 0" height="0.552" width="1" rotation="0 0 0"
+          class="clickable" event-set__click="_event: click; visible: false; sound: src: #clickSound; on: click;"></a-plane>
+        <a-gltf-model rotation="0 0 0" position="0 0 0.1" scale="0.005 0.005 0.005" src="#avatarModel"
+          animation="property: position; to: 0 0.1 0.1; dur: 1000; easing: easeInOutQuad; loop: true; dir: alternate"
+          class="clickable" event-set__click="_event: click; visible: false; sound: src: #clickSound; on: click;"></a-gltf-model>
       </a-entity>
+      
+      <div id="questionContainer" style="display: none;">
+        <form id="questionForm">
+          <p>What is the capital of France?</p>
+          <label><input type="radio" name="answer" value="paris"> Paris</label><br>
+          <label><input type="radio" name="answer" value="london"> London</label><br>
+          <label><input type="radio" name="answer" value="berlin"> Berlin</label><br>
+          <button type="submit">Submit</button>
+        </form>
+      </div>
+      
+      <div id="qrCodeContainer" style="display: none;">
+        <img src="https://example.com/qr-code.png">
+      </div>
+      
+      <audio id="clickSound" src="click.mp3"></audio>
+      
+      <script>
+      const interactiveEntity = document.querySelector("#interactiveEntity");
+      const questionContainer = document.querySelector("#questionContainer");
+      const questionForm = document.querySelector("#questionForm");
+      const qrCodeContainer = document.querySelector("#qrCodeContainer");
+      
+      interactiveEntity.addEventListener("click", function() {
+        interactiveEntity.setAttribute("visible", false);
+        const clickSound = document.querySelector("#clickSound");
+        clickSound.play();
+        questionContainer.style.display = "block";
+      });
+      
+      questionForm.addEventListener("submit", function(event) {
+        event.preventDefault();
+        const selectedAnswer = document.querySelector('input[name="answer"]:checked').value;
+        if (selectedAnswer === "paris") {
+          questionContainer.style.display = "none";
+          qrCodeContainer.style.display = "block";
+        } else {
+          // handle incorrect answer
+        }
+      });
+      </script>
     </a-scene>
-
-    <div id="question-container" style="display: none;">
-      <h2>Choose the correct answer:</h2>
-      <form id="question-form">
-        <input type="radio" id="answer1" name="answer" value="incorrect">
-        <label for="answer1">Answer 1</label><br>
-        <input type="radio" id="answer2" name="answer" value="correct">
-        <label for="answer2">Answer 2</label><br>
-        <input type="radio" id="answer3" name="answer" value="incorrect">
-        <label for="answer3">Answer 3</label><br>
-        <button type="button" id="submit-button">Submit</button>
-      </form>
-    </div>
-
-    <div id="qr-code-container" style="display: none;">
-      <!-- Add QR code element here -->
-    </div>
   </body>
 </html>
