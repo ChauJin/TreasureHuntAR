@@ -21,15 +21,52 @@
 
     <a-camera position="0 0 0" look-controls="enabled: false"
       raycaster="objects: .clickable"><a-cursor></a-cursor></a-camera>
-      <a-entity mindar-image-target="targetIndex: 0">
-        <a-plane id="interactiveEntity" src="#card" position="0 0 0" height="0.552" width="1" rotation="0 0 0"
-          class="clickable" event-set__click="_event: click; visible: false;"></a-plane>
-        <a-gltf-model rotation="0 0 0" position="0 0 0.1" scale="0.005 0.005 0.005" src="#avatarModel"
-          animation="property: position; to: 0 0.1 0.1; dur: 1000; easing: easeInOutQuad; loop: true; dir: alternate"
-          class="clickable" event-set__click="_event: click; visible: false;"></a-gltf-model>
-      </a-entity>
-
-
+    <a-entity mindar-image-target="targetIndex: 0">
+      <a-plane id="interactiveEntity" src="#card" position="0 0 0" height="0.552" width="1" rotation="0 0 0"
+        class="clickable" event-set__click="_event: click; visible: false;"></a-plane>
+      <a-gltf-model rotation="0 0 0" position="0 0 0.1" scale="0.005 0.005 0.005" src="#avatarModel"
+        animation="property: position; to: 0 0.1 0.1; dur: 1000; easing: easeInOutQuad; loop: true; dir: alternate"
+        class="clickable" event-set__click="_event: click; visible: false;"></a-gltf-model>
+    </a-entity>
   </a-scene>
+
+  <script>
+    const interactiveEntity = document.querySelector("#interactiveEntity");
+    const sound = document.querySelector("#sound");
+    const questionContainer = document.createElement("div");
+    questionContainer.setAttribute("id", "questionContainer");
+    questionContainer.innerHTML =
+      '<form id="questionForm">\
+        <p>Choose the correct answer:</p>\
+        <input type="radio" name="answer" value="option1"> Option 1<br>\
+        <input type="radio" name="answer" value="option2"> Option 2<br>\
+        <input type="radio" name="answer" value="option3"> Option 3<br>\
+        <input type="radio" name="answer" value="option4"> Option 4<br>\
+        <input type="submit" value="Submit">\
+      </form>';
+    const qrCodeContainer = document.createElement("div");
+    qrCodeContainer.setAttribute("id", "qrCodeContainer");
+    qrCodeContainer.innerHTML =
+      '<img src="./redeemCode/redeem.png" alt="QR Code">';
+
+    interactiveEntity.addEventListener("click", function () {
+      interactiveEntity.setAttribute("visible", false);
+      sound.play();
+      document.body.appendChild(questionContainer);
+    });
+
+    document.addEventListener("submit", function (event) {
+      event.preventDefault();
+      const selectedAnswer = document.querySelector(
+        'input[name="answer"]:checked'
+      ).value;
+      if (selectedAnswer === "option1") {
+        questionContainer.remove();
+        document.body.appendChild(qrCodeContainer);
+      } else {
+        // Handle incorrect answer behavior if needed
+      }
+    });
+  </script>
 </body>
 </html>
