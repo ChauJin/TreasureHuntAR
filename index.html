@@ -95,31 +95,36 @@ hello
     <div id="questionContainer" style="display: none; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
       <form id="questionForm" style="text-align: center;">
         <p>What is the capital of France?</p>
-        <label><input type="radio" name="answer" value="paris"> Paris</label><br>
-        <label><input type="radio" name="answer" value="london"> London</label><br>
-        <label><input type="radio" name="answer" value="berlin"> Berlin</label><br>
+        <label><input type="radio" name="answer" value="paris" onclick="handleAnswerSelection(this)"> Paris</label><br>
+        <label><input type="radio" name="answer" value="london" onclick="handleAnswerSelection(this)"> London</label><br>
+        <label><input type="radio" name="answer" value="berlin" onclick="handleAnswerSelection(this)"> Berlin</label><br>
         <button type="button" id="submitAnswerButton">Submit</button>
       </form>
     </div>
-
-<!-- ... Remaining HTML code ... -->
-<script>
-  const submitAnswerButton = document.querySelector("#submitAnswerButton");
-  
-  submitAnswerButton.addEventListener("click", function () {
-    const selectedAnswer = document.querySelector('input[name="answer"]:checked');
-    if (selectedAnswer) {
-      if (selectedAnswer.value === "paris") {
-        questionContainer.style.display = "none";
-        qrCodeContainer.style.display = "block";
-      } else {
-        // Handle incorrect answer
+    
+    <!-- ... Remaining HTML code ... -->
+    <script>
+      const submitAnswerButton = document.querySelector("#submitAnswerButton");
+      const answerRadioButtons = document.querySelectorAll('input[name="answer"]');
+      let selectedAnswer;
+    
+      submitAnswerButton.addEventListener("click", function () {
+        if (selectedAnswer) {
+          if (selectedAnswer.value === "paris") {
+            questionContainer.style.display = "none";
+            qrCodeContainer.style.display = "block";
+          } else {
+            // Handle incorrect answer
+          }
+        } else {
+          // No answer selected
+        }
+      });
+    
+      function handleAnswerSelection(radioButton) {
+        selectedAnswer = radioButton;
       }
-    } else {
-      // No answer selected
-    }
-  });
-</script>
+    </script>
 
     <div id="qrCodeContainer" style="display: none;">
       <img src="./redeemCode/redeem.png">
