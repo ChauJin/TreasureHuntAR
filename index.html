@@ -15,26 +15,43 @@
 
   <a-scene mindar-image="imageTargetSrc: ./targets.mind; maxTrack: 2">
     //set assets
-    <a-assets>
-      <a-asset-item id="model" src="./assets/avocado.glb"></a-asset-item>   
-    </a-assets>
+    <!-- <a-assets>
+      <a-asset-item id="model" src="./assets/avocado.glb"></a-asset-item>
+    </a-assets> -->
     <a-assets>
       <img id="boxTexture" src="https://i.imgur.com/mYmmbrp.jpg">
     </a-assets>
     <a-box src="#boxTexture" position="0 2 -5" rotation="0 45 45" scale="2 2 2"
-    animation="property: object3D.position.y; to: 2.2; dir: alternate; dur: 2000; loop: true"></a-box>
+      animation="property: object3D.position.y; to: 2.2; dir: alternate; dur: 2000; loop: true"
+      scale-on-mouseenter></a-box>
     //set camera
     <a-camera position="0 0 0" look-controls="enabled: false"><a-cursor></a-cursor></a-camera>
     //set target
-    <a-entity mindar-image-target="targetIndex: 0">
+    <!-- <a-entity mindar-image-target="targetIndex: 0">
       <a-plane color="blue" opaciy="0.5" position="0 0 0" height="0.552" width="1" rotation="0 0 0"></a-plane>
     </a-entity>
     //set model
     <a-entity mindar-image-target="targetIndex: 1">
       <a-entity gltf-model="#model" rotation="0 180 0" scale="3 3 3" position="0 -0.5 0"
         animation-mixer="clip: Run"></a-entity>
-    </a-entity>
+    </a-entity> -->
   </a-scene>
+
+  <script>
+    AFRAME.registerComponent('scale-on-mouseenter', {
+      schema: {
+        to: { default: '2.5 2.5 2.5', type: 'vec3' }
+      },
+
+      init: function () {
+        var data = this.data;
+        var el = this.el;
+        this.el.addEventListener('mouseenter', function () {
+          el.object3D.scale.copy(data.to);
+        });
+      }
+    });
+  </script>
 </body>
 
 </html>
