@@ -1,99 +1,40 @@
 <html>
+
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
   <script src="https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.1.4/dist/mindar-image.prod.js"></script>
+  <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
   <script src="https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.1.4/dist/mindar-image-aframe.prod.js"></script>
+  <!-- 方便在移动端调试 -->
   <script src="https://unpkg.com/vconsole@latest/dist/vconsole.min.js"></script>
+
 </head>
 
-<a-assets>
-  <a-asset-item id="model" src="./assets/avocado.glb"></a-asset-item>
-</a-assets>
 
 <body>
+
   <a-scene mindar-image="imageTargetSrc: ./targets.mind; maxTrack: 2">
-    <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
-
+    //set assets
+    <a-assets>
+      <a-asset-item id="model" src="./assets/avocado.glb"></a-asset-item>   
+    </a-assets>
+    <a-assets>
+      <img id="boxTexture" src="https://i.imgur.com/mYmmbrp.jpg">
+    </a-assets>
+    <a-box src="#boxTexture" position="0 2 -5" rotation="0 45 45" scale="2 2 2"
+    animation="property: object3D.position.y; to: 2.2; dir: alternate; dur: 2000; loop: true"></a-box>
+    //set camera
+    <a-camera position="0 0 0" look-controls="enabled: false"><a-cursor></a-cursor></a-camera>
+    //set target
     <a-entity mindar-image-target="targetIndex: 0">
-      <a-entity id="model-entity" gltf-model="#model" rotation="0 180 0" scale="3 3 3" position="0 -0.5 0" animation-mixer="clip: Run"></a-entity>
+      <a-plane color="blue" opaciy="0.5" position="0 0 0" height="0.552" width="1" rotation="0 0 0"></a-plane>
     </a-entity>
-
-    <a-entity mindar-image-target="targetIndex: 1" id="image-target">
-      <!-- Add your image target content here -->
+    //set model
+    <a-entity mindar-image-target="targetIndex: 1">
+      <a-entity gltf-model="#model" rotation="0 180 0" scale="3 3 3" position="0 -0.5 0"
+        animation-mixer="clip: Run"></a-entity>
     </a-entity>
-    
-    <a-entity id="question-container" visible="false">
-      <h1>Question 1</h1>
-      <p>What’s full of holes but still holds water?</p>
-      <input type="radio" name="question1" value="a" /> a. a sponge<br />
-      <input type="radio" name="question1" value="b" /> b. a sieve<br />
-      <input type="radio" name="question1" value="c" /> c. a colander<br />
-      <input type="radio" name="question1" value="d" /> d. a strainer<br />
-      <button onclick="checkAnswer(1)">Submit</button>
-    </a-entity>
-    
-    <script>
-      const imageTarget = document.querySelector('#image-target');
-      const questionContainer = document.querySelector('#question-container');
-    
-      imageTarget.addEventListener('mindar-image-target-found', () => {
-        questionContainer.setAttribute('visible', 'true');
-      });
-    </script>
-
-    <div id="redeem-container" style="display: none;">
-      <h1>Congratulations!</h1>
-      <p>You have answered all the questions correctly.</p>
-      <p>Here is your redeem coupon:</p>
-      <img src="./redeemCode/redeem.png" alt="Redeem Coupon QR Code" />
-    </div>
-
-    <button id="question-button" style="display: none;" onclick="showQuestion()">Press to Show Question</button> <!-- Button to show the question -->
-
   </a-scene>
-
-  <script>
-    var currentQuestion = 1;
-
-    function showQuestion() {
-      // Hide the model entity
-      document.getElementById("model-entity").setAttribute("visible", false);
-
-      // Show the question container
-      document.getElementById("question-container").setAttribute("visible", true);
-    }
-
-    function checkAnswer(questionNumber) {
-      // Get the user's answer from the input field
-      var answer = document.querySelector('input[name="question' + questionNumber + '"]:checked');
-
-      // Check if an answer is selected
-      if (answer) {
-        // Check if the answer is correct
-        if (answer.value === "b") {
-          // Hide the current question container
-          document.getElementById("question-container").setAttribute("visible", false);
-
-          // Check if it was the last question
-          if (questionNumber === 1) {
-            // Show the redeem container
-            document.getElementById("redeem-container").style.display = "block";
-          } else {
-            // Show the next question container
-            currentQuestion++;
-            document.getElementById("question-container").setAttribute("visible", true);
-            document.getElementById("question-container").querySelector("h1").textContent = "Question " + currentQuestion;
-            document.getElementById("question-container").querySelector("p").textContent = "Sample question " + currentQuestion + "?";
-            document.getElementById("question-container").querySelector("button").setAttribute("onclick", "checkAnswer(" + currentQuestion + ")");
-          }
-        } else {
-          alert("Sorry, that is incorrect. Please try again.");
-        }
-      } else {
-        alert("Please select an answer.");
-      }
-    }
-  </script>
 </body>
+
 </html>
