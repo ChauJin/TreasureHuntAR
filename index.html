@@ -12,16 +12,16 @@
 
 
 <body>
-  <a-scene>
-  <!-- <a-scene mindar-image="imageTargetSrc: ./targets.mind; maxTrack: 2"> -->
+  
+    <a-scene mindar-image="imageTargetSrc: ./targets.mind; maxTrack: 2">
 
-    <!-- <a-assets>
-      <a-asset-item id="model" src="./assets/avocado.glb"></a-asset-item>
-    </a-assets> -->
-    <a-assets>
+      <a-assets>
+        <a-asset-item id="model" src="./assets/avocado.glb"></a-asset-item>
+      </a-assets>
+      <!-- <a-assets>
       <img id="boxTexture" src="https://i.imgur.com/mYmmbrp.jpg">
-    </a-assets>
-    <a-box
+    </a-assets> -->
+      <!-- <a-box
     src="#boxTexture"
     position="0 2 -5"
     rotation="0 45 45"
@@ -30,41 +30,42 @@
     animation__mouseenter="property: scale; to: 2.3 2.3 2.3; dur: 300; startEvents: mouseenter"
     animation__mouseleave="property: scale; to: 2 2 2; dur: 300; startEvents: mouseleave"></a-box>
 
-    <a-camera position="0 0 0" look-controls="enabled: false"><a-cursor></a-cursor></a-camera>
+    <a-camera position="0 0 0" look-controls="enabled: false"><a-cursor></a-cursor></a-camera> -->
 
-    <!-- <a-entity mindar-image-target="targetIndex: 0">
-      <a-plane color="blue" opaciy="0.5" position="0 0 0" height="0.552" width="1" rotation="0 0 0"></a-plane>
-    </a-entity>
-    //set model
-    <a-entity mindar-image-target="targetIndex: 1">
-      <a-entity gltf-model="#model" rotation="0 180 0" scale="3 3 3" position="0 -0.5 0"
-        animation-mixer="clip: Run"></a-entity>
-    </a-entity> -->
-  </a-scene>
-  
-  <script>
-    var boxEl = document.querySelector('a-box');
-    boxEl.addEventListener('mouseenter', function () {
-      boxEl.setAttribute('scale', {x: 2, y: 2, z: 2});
-    });
-  </script>
+      <a-entity mindar-image-target="targetIndex: 0">
+        <a-plane src="#card" position="0 0 0" height="0.552" width="1" rotation="0 0 0"></a-plane>
+        <a-gltf-model rotation="0 0 0 " position="0 0 0.1" scale="0.005 0.005 0.005" src="#avatarModel" animation="property: position; to: 0 0.1 0.1; dur: 1000; easing: easeInOutQuad; loop: true; dir: alternate">
+      </a-entity>
+      //set model
+      <a-entity mindar-image-target="targetIndex: 1">
+        <a-entity gltf-model="#model" rotation="0 180 0" scale="3 3 3" position="0 -0.5 0"
+          animation-mixer="clip: Run"></a-entity>
+      </a-entity>
+    </a-scene>
+
+    <!-- <script>
+      var boxEl = document.querySelector('a-box');
+      boxEl.addEventListener('mouseenter', function () {
+        boxEl.setAttribute('scale', { x: 2, y: 2, z: 2 });
+      });
+    </script>
 
 
-  <script>
-    AFRAME.registerComponent('scale-on-mouseenter', {
-      schema: {
-        to: { default: '2.5 2.5 2.5', type: 'vec3' }
-      },
+    <script>
+      AFRAME.registerComponent('scale-on-mouseenter', {
+        schema: {
+          to: { default: '2.5 2.5 2.5', type: 'vec3' }
+        },
 
-      init: function () {
-        var data = this.data;
-        var el = this.el;
-        this.el.addEventListener('mouseenter', function () {
-          el.object3D.scale.copy(data.to);
-        });
-      }
-    });
-  </script>
+        init: function () {
+          var data = this.data;
+          var el = this.el;
+          this.el.addEventListener('mouseenter', function () {
+            el.object3D.scale.copy(data.to);
+          });
+        }
+      });
+    </script> -->
 </body>
 
 </html>
