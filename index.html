@@ -15,23 +15,15 @@
   <a-scene mindar-image="imageTargetSrc: ./targets.mind; maxTrack: 2">
     <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
 
-    <a-entity mindar-image-target="targetIndex: 0">
+    <!-- <a-entity mindar-image-target="targetIndex: 0">
       <a-plane color="blue" opacity="0.5" position="0 0 0" height="0.552" width="1" rotation="0 0 0"></a-plane>
-    </a-entity>
+    </a-entity> -->
 
-    <a-entity mindar-image-target="targetIndex: 1" id="target-1">
+    <a-entity mindar-image-target="targetIndex: 1">
       <a-entity id="model-entity" gltf-model="#model" rotation="0 180 0" scale="3 3 3" position="0 -0.5 0" animation-mixer="clip: Run"></a-entity>
     </a-entity>
 
-    <div id="question-container" style="display: none;">
-      <h1>Question 1</h1>
-      <p>What’s full of holes but still holds water?</p>
-      <input type="radio" name="question1" value="a" /> a. a sponge<br />
-      <input type="radio" name="question1" value="b" /> b. a sieve<br />
-      <input type="radio" name="question1" value="c" /> c. a colander<br />
-      <input type="radio" name="question1" value="d" /> d. a strainer<br />
-      <button onclick="checkAnswer(1)">Submit</button>
-    </div>
+    <a-entity mindar-image-target="targetIndex: 0" id="question-container" text="value: What’s full of holes but still holds water?; color: #000; wrapCount: 20" position="-0.9 0.2 -3" scale="1.5 1.5 1.5" visible="false"></a-entity>
 
     <div id="redeem-container" style="display: none;">
       <h1>Congratulations!</h1>
@@ -52,7 +44,7 @@
       document.getElementById("model-entity").setAttribute("visible", false);
 
       // Show the question container
-      document.getElementById("question-container").style.display = "block";
+      document.getElementById("question-container").setAttribute("visible", true);
     }
 
     function checkAnswer(questionNumber) {
@@ -64,7 +56,7 @@
         // Check if the answer is correct
         if (answer.value === "b") {  // Assuming option 'b' is the correct answer for all questions
           // Hide the current question container
-          document.getElementById("question-container").style.display = "none";
+          document.getElementById("question-container").setAttribute("visible", false);
 
           // Check if it was the last question
           if (questionNumber === 5) {
@@ -73,7 +65,7 @@
           } else {
             // Show the next question container
             currentQuestion++;
-            document.getElementById("question-container").style.display = "block";
+            document.getElementById("question-container").setAttribute("visible", true);
           }
         } else {
           alert("Sorry, that is incorrect. Please try again.");
