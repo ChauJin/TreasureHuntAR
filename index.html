@@ -81,50 +81,53 @@ hello
     <a-camera position="0 0 0" look-controls="enabled: false" cursor="fuse: false; rayOrigin: mouse;"
       raycaster="near: 10; far: 10000; objects: .clickable"></a-camera>
 
-    <a-entity mindar-image-target="targetIndex: 0">
-      <a-plane id="interactiveEntity" src="#card" position="0 0 0" height="0.552" width="1" rotation="0 0 0"
-        class="clickable"
-        event-set__click="_event: click; visible: false; sound: src: #clickSound; on: click;"></a-plane>
-      <a-gltf-model id="gltfModel" rotation="0 0 0" position="0 0 0.1" scale="0.005 0.005 0.005" src="#avatarModel"
-        animation="property: position; to: 0 0.1 0.1; dur: 1000; easing: easeInOutQuad; loop: true; dir: alternate"
-        class="clickable"></a-gltf-model>
-    </a-entity>
-
-    <!-- ... Previous HTML code ... -->
-
-    <div id="questionContainer" style="display: none; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
-      <form id="questionForm" style="text-align: center;">
+      <a-entity mindar-image-target="targetIndex: 0">
+        <a-plane id="interactiveEntity" src="#card" position="0 0 0" height="0.552" width="1" rotation="0 0 0"
+          class="clickable"
+          event-set__click="_event: click; visible: false; sound: src: #clickSound; on: click;"></a-plane>
+        <a-gltf-model id="gltfModel" rotation="0 0 0" position="0 0 0.1" scale="0.005 0.005 0.005" src="#avatarModel"
+          animation="property: position; to: 0 0.1 0.1; dur: 1000; easing: easeInOutQuad; loop: true; dir: alternate"
+          class="clickable"></a-gltf-model>
+      </a-entity>
+      
+      <!-- ... Previous HTML code ... -->
+      
+      <div id="questionContainer" style="display: none; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
         <p>What is the capital of France?</p>
-        <label><input type="radio" name="answer" value="paris" onclick="handleAnswerSelection(this)"> Paris</label><br>
-        <label><input type="radio" name="answer" value="london" onclick="handleAnswerSelection(this)"> London</label><br>
-        <label><input type="radio" name="answer" value="berlin" onclick="handleAnswerSelection(this)"> Berlin</label><br>
+        <label><input type="radio" name="answer" value="paris" class="answer-radio"> Paris</label><br>
+        <label><input type="radio" name="answer" value="london" class="answer-radio"> London</label><br>
+        <label><input type="radio" name="answer" value="berlin" class="answer-radio"> Berlin</label><br>
         <button type="button" id="submitAnswerButton">Submit</button>
-      </form>
-    </div>
-    
-    <!-- ... Remaining HTML code ... -->
-    <script>
-      const submitAnswerButton = document.querySelector("#submitAnswerButton");
-      const answerRadioButtons = document.querySelectorAll('input[name="answer"]');
-      let selectedAnswer;
-    
-      submitAnswerButton.addEventListener("click", function () {
-        if (selectedAnswer) {
-          if (selectedAnswer.value === "paris") {
-            questionContainer.style.display = "none";
-            qrCodeContainer.style.display = "block";
+      </div>
+      
+      <!-- ... Remaining HTML code ... -->
+      
+      <script>
+        const answerRadioButtons = document.querySelectorAll('.answer-radio');
+        const submitAnswerButton = document.querySelector("#submitAnswerButton");
+        let selectedAnswer;
+      
+        answerRadioButtons.forEach(function (radioButton) {
+          radioButton.addEventListener('click', function () {
+            selectedAnswer = radioButton.value;
+          });
+        });
+      
+        submitAnswerButton.addEventListener("click", function () {
+          if (selectedAnswer) {
+            if (selectedAnswer === "paris") {
+              questionContainer.style.display = "none";
+              qrCodeContainer.style.display = "block";
+            } else {
+              // Handle incorrect answer
+            }
           } else {
-            // Handle incorrect answer
+            // No answer selected
           }
-        } else {
-          // No answer selected
-        }
-      });
-    
-      function handleAnswerSelection(radioButton) {
-        selectedAnswer = radioButton;
-      }
-    </script>
+        });
+      
+        // Rest of your script...
+      </script>
 
     <div id="qrCodeContainer" style="display: none;">
       <img src="./redeemCode/redeem.png">
