@@ -1,8 +1,8 @@
 <html>
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <script src="https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.1.4/dist/mindar-image.prod.js"></script>
   <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.1.4/dist/mindar-image.prod.js"></script>
   <script src="https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.1.4/dist/mindar-image-aframe.prod.js"></script>
   <script src="https://unpkg.com/vconsole@latest/dist/vconsole.min.js"></script>
 </head>
@@ -15,15 +15,13 @@
   <a-scene mindar-image="imageTargetSrc: ./targets.mind; maxTrack: 2">
     <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
 
-    <!-- <a-entity mindar-image-target="targetIndex: 0">
-      <a-plane color="blue" opacity="0.5" position="0 0 0" height="0.552" width="1" rotation="0 0 0"></a-plane>
-    </a-entity> -->
-
     <a-entity mindar-image-target="targetIndex: 0">
       <a-entity id="model-entity" gltf-model="#model" rotation="0 180 0" scale="3 3 3" position="0 -0.5 0" animation-mixer="clip: Run"></a-entity>
     </a-entity>
 
-    <a-entity mindar-image-target="targetIndex: 1" id="question-container" visible="false">
+    <a-entity mindar-image-target="targetIndex: 1" id="target-1"></a-entity> <!-- Add the target entity back -->
+
+    <a-entity id="question-container" visible="false">
       <h1>Question 1</h1>
       <p>What’s full of holes but still holds water?</p>
       <input type="radio" name="question1" value="a" /> a. a sponge<br />
@@ -32,6 +30,13 @@
       <input type="radio" name="question1" value="d" /> d. a strainer<br />
       <button onclick="checkAnswer(1)">Submit</button>
     </a-entity>
+
+    <div id="redeem-container" style="display: none;">
+      <h1>Congratulations!</h1>
+      <p>You have answered all the questions correctly.</p>
+      <p>Here is your redeem coupon:</p>
+      <img src="./redeemCode/redeem.png" alt="Redeem Coupon QR Code" />
+    </div>
 
     <button id="question-button" style="display: none;" onclick="showQuestion()">Press to Show Question</button> <!-- Button to show the question -->
 
@@ -55,18 +60,21 @@
       // Check if an answer is selected
       if (answer) {
         // Check if the answer is correct
-        if (answer.value === "b") {  // Assuming option 'b' is the correct answer for all questions
+        if (answer.value === "b") {
           // Hide the current question container
           document.getElementById("question-container").setAttribute("visible", false);
 
           // Check if it was the last question
-          if (questionNumber === 5) {
+          if (questionNumber === 1) {
             // Show the redeem container
             document.getElementById("redeem-container").style.display = "block";
           } else {
             // Show the next question container
             currentQuestion++;
             document.getElementById("question-container").setAttribute("visible", true);
+            document.getElementById("question-container").querySelector("h1").textContent = "Question " + currentQuestion;
+            document.getElementById("question-container").querySelector("p").textContent = "Sample question " + currentQuestion + "?";
+            document.getElementById("question-container").querySelector("button").setAttribute("onclick", "checkAnswer(" + currentQuestion + ")");
           }
         } else {
           alert("Sorry, that is incorrect. Please try again.");
@@ -75,11 +83,6 @@
         alert("Please select an answer.");
       }
     }
-
-    // Event listener for touchstart on target with index 1
-    document.getElementById("target-1").addEventListener("touchstart", function() {
-      document.getElementById("question-button").style.display = "block";
-    });
   </script>
 </body>
 </html>
