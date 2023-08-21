@@ -19,8 +19,10 @@
       <a-entity id="model-entity" gltf-model="#model" rotation="0 180 0" scale="3 3 3" position="0 -0.5 0" animation-mixer="clip: Run"></a-entity>
     </a-entity>
 
-    <a-entity mindar-image-target="targetIndex: 1" id="target-1"></a-entity> <!-- Add the target entity back -->
-
+    <a-entity mindar-image-target="targetIndex: 1" id="image-target">
+      <!-- Add your image target content here -->
+    </a-entity>
+    
     <a-entity id="question-container" visible="false">
       <h1>Question 1</h1>
       <p>What’s full of holes but still holds water?</p>
@@ -30,6 +32,15 @@
       <input type="radio" name="question1" value="d" /> d. a strainer<br />
       <button onclick="checkAnswer(1)">Submit</button>
     </a-entity>
+    
+    <script>
+      const imageTarget = document.querySelector('#image-target');
+      const questionContainer = document.querySelector('#question-container');
+    
+      imageTarget.addEventListener('mindar-image-target-found', () => {
+        questionContainer.setAttribute('visible', 'true');
+      });
+    </script>
 
     <div id="redeem-container" style="display: none;">
       <h1>Congratulations!</h1>
