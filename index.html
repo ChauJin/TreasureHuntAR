@@ -21,11 +21,12 @@
       <audio id="sound" src="./sounds/start.mp3"></audio>
     </a-assets>
 
-    <a-camera position="0 0 0" look-controls="enabled: false"
-      raycaster="objects: .clickable"><a-cursor></a-cursor></a-camera>
+    <a-camera position="0 0 0" look-controls="enabled: false" cursor="fuse: false; rayOrigin: mouse;"
+      raycaster="far: ${customFields.libVersion}; objects: .clickable"></a-camera>
+
     <a-entity mindar-image-target="targetIndex: 0" id="myEntity">
-      <a-plane id="interactiveEntity" src="#card" position="0 0 0" height="0.552" width="1" rotation="0 0 0"
-        class="clickable"></a-plane>
+      <a-plane id="interactiveEntity" class="clickable" src="#card" position="0 0 0" height="0.552" width="1"
+        rotation="0 0 0" class="clickable"></a-plane>
       <a-gltf-model rotation="0 0 0" position="0 0 0.1" scale="0.005 0.005 0.005" src="#avatarModel"
         animation="property: position; to: 0 0.1 0.1; dur: 1000; easing: easeInOutQuad; loop: true; dir: alternate"
         class="clickable"></a-gltf-model>
@@ -33,11 +34,10 @@
   </a-scene>
 
   <script>
-    const myEntity = document.querySelector("#myEntity");
-    const mindarImage = myEntity.components["mindar-image"];
-
-    myEntity.addEventListener("click", function () {
-      mindarImage.enabled = false;
+    // detect click event
+    const examplePlane = document.querySelector('#example-plane');
+    examplePlane.addEventListener("click", event => {
+      console.log("plane click");
     });
 
     // const interactiveEntity = document.querySelector("#interactiveEntity");
