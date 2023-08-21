@@ -59,7 +59,6 @@
 </head>
 
 <body>
-  hi
   <div style="position: absolute; z-index: 1000">
     <button id="example-start-button">Start</button>
     <button id="example-pause-button">Pause</button>
@@ -91,15 +90,36 @@
         class="clickable"></a-gltf-model>
     </a-entity>
 
-    <div id="questionContainer" style="display: none;">
-      <form id="questionForm">
+    <!-- ... Previous HTML code ... -->
+
+    <div id="questionContainer" style="display: none; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+      <form id="questionForm" style="text-align: center;">
         <p>What is the capital of France?</p>
         <label><input type="radio" name="answer" value="paris"> Paris</label><br>
         <label><input type="radio" name="answer" value="london"> London</label><br>
         <label><input type="radio" name="answer" value="berlin"> Berlin</label><br>
-        <button type="submit">Submit</button>
+        <button type="button" id="submitAnswerButton">Submit</button>
       </form>
     </div>
+
+<!-- ... Remaining HTML code ... -->
+<script>
+  const submitAnswerButton = document.querySelector("#submitAnswerButton");
+  
+  submitAnswerButton.addEventListener("click", function () {
+    const selectedAnswer = document.querySelector('input[name="answer"]:checked');
+    if (selectedAnswer) {
+      if (selectedAnswer.value === "paris") {
+        questionContainer.style.display = "none";
+        qrCodeContainer.style.display = "block";
+      } else {
+        // Handle incorrect answer
+      }
+    } else {
+      // No answer selected
+    }
+  });
+</script>
 
     <div id="qrCodeContainer" style="display: none;">
       <img src="./redeemCode/redeem.png">
