@@ -25,7 +25,7 @@
       </a-assets>
 
       <a-camera position="0 0 0" look-controls="enabled: false" raycaster="objects: .clickable"><a-cursor></a-cursor></a-camera>
-      <a-entity mindar-image-target="targetIndex: 0">
+      <a-entity mindar-image-target="targetIndex: 0" event-set__click="_event: click; call: myFunction()" cursor>
         <a-plane
           id="interactiveEntity"
           src="#card"
@@ -43,7 +43,18 @@
         ></a-gltf-model>
       </a-entity>
 
+
+
       <script>
+        function myFunction() {
+          console.log('The entity was clicked!');
+        }
+      </script>
+
+
+
+
+      <!-- <script>
         const interactiveEntity = document.querySelector("#interactiveEntity");
         const sound = document.querySelector("#sound");
         const questionContainer = document.createElement("div");
@@ -80,7 +91,7 @@
             // Handle incorrect answer behavior if needed
           }
         });
-      </script>
+      </script> -->
     </a-scene>
   </body>
 </html>
